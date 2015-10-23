@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
 
   s.author             = { "nickolanack" => "nickblackwell82@gmail.com" }
 
-  s.platform     = :ios
+  s.platform     = :ios, '8.0'
  
  
   s.source       = { :git => "https://github.com/nickolanack/objc-kml-saxparser.git", :tag => 'v0.0.1'}
