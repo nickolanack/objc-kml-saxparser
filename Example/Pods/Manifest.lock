@@ -1,0 +1,14 @@
+PODS:
+  - KMLSaxParser (0.1.0)
+
+DEPENDENCIES:
+  - KMLSaxParser (from `../`)
+
+EXTERNAL SOURCES:
+  KMLSaxParser:
+    :path: ../
+
+SPEC CHECKSUMS:
+  KMLSaxParser: f26ed852c1f99c290ad80fed8e58a06b3814acec
+
+COCOAPODS: 0.39.0
