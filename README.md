@@ -2,7 +2,7 @@
 
 An ultra simple SAX kml parser - great for large kml files
 
-[![CI Status](http://img.shields.io/travis/nickolanack/KMLSaxParser.svg?style=flat)](https://travis-ci.org/nickolanack/KMLSaxParser)
+[![CI Status](http://img.shields.io/travis/nickolanack/objc-kml-saxparser.svg?style=flat)](https://travis-ci.org/nickolanack/objc-kml-saxparser)
 [![Version](https://img.shields.io/cocoapods/v/KMLSaxParser.svg?style=flat)](http://cocoapods.org/pods/KMLSaxParser)
 [![License](https://img.shields.io/cocoapods/l/KMLSaxParser.svg?style=flat)](http://cocoapods.org/pods/KMLSaxParser)
 [![Platform](https://img.shields.io/cocoapods/p/KMLSaxParser.svg?style=flat)](http://cocoapods.org/pods/KMLSaxParser)
