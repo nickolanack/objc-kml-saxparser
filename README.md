@@ -36,10 +36,10 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 -(void) onKmlGroundOverlay:(NSDictionary *)dictionary{
 	//TODO add to MKMap
 }
--(void)onKmlPolyline:(NSDictionary *)dictionary{
+-(void) onKmlPolyline:(NSDictionary *)dictionary{
 	//TODO add to MKMap
 }
--(void)onKmlPolygon:(NSDictionary *)dictionary{
+-(void) onKmlPolygon:(NSDictionary *)dictionary{
 	//TODO add to MKMap
 }
 ...
