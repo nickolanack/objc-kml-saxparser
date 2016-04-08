@@ -9,6 +9,43 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
+```ObjC
+
+#SomeViewControler.h 
+
+...
+#import "SaxKmlParserDelegate.h"
+@interface SomeViewController : UIViewController<SaxKmlParserDelegate, ...>
+...
+
+
+
+
+#SomeViewController.m
+
+...
+
+-(void) someKmlIntializer:(NSString *) kmlText{
+	
+	 [[[SaxKmlParser alloc] initWithDelegate:self] parseString:kmlText];
+
+}
+-(void) onKmlPlacemark:(NSDictionary *)dictionary{
+	//TODO add to MKMap
+}
+-(void) onKmlGroundOverlay:(NSDictionary *)dictionary{
+	//TODO add to MKMap
+}
+-(void)onKmlPolyline:(NSDictionary *)dictionary{
+	//TODO add to MKMap
+}
+-(void)onKmlPolygon:(NSDictionary *)dictionary{
+	//TODO add to MKMap
+}
+...
+
+```
+
 ## Requirements
 
 ## Installation
