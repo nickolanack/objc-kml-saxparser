@@ -10,6 +10,37 @@ An ultra simple SAX kml parser - great for large kml files
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
+###Blocks Methos###
+
+```
+#import "Kml.h"
+
+//...
+
+-(void) someKmlIntializer:(NSString *) kmlText{
+
+
+NSString *kmlString=@"<?xml version=\"1.0\" encoding=\"UTF-8\"?><kml xmlns=\"http:/www.opengis.net/kml/2.2\"><Placemark><name>Descriptive HTML</name><visibility>1</visibility><description><![CDATA[]]></description><Point><coordinates>-122.0822035425683,37.42228990140251,0</coordinates></Point></Placemark></kml>​";
+
+    Kml *kml =[[Kml alloc] initWithKmlString:kmlString];
+    
+    [kml onPlacemark:^(NSDictionary *dictionary) {
+        
+        //NSLog(@"%@", dictionary);
+         
+    }];
+    
+    [kml parse];
+
+}
+
+
+
+```
+
+
+
+###Delegate Method###
 
 ```ObjC
 
