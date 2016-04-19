@@ -31,10 +31,10 @@
 
 
 -(void)parseString:(NSString *)string{
-   
-
+    
+    
     self.currentObject=nil;
-
+    
     self.currentObjectType=[[NSMutableArray alloc] init];
     
     NSXMLParser *parser = [[NSXMLParser alloc]initWithData:[string dataUsingEncoding:NSUTF8StringEncoding]];
@@ -54,9 +54,9 @@
 
 // Document handling methods
 - (void)parserDidStartDocument:(NSXMLParser *)parser{
-   // NSLog(@" parserDidStartDocument ");
+    // NSLog(@" parserDidStartDocument ");
     NSLog(@"%s: Parsing Document Started.", __PRETTY_FUNCTION__);
-
+    
 }
 // sent when the parser begins parsing of the document.
 - (void)parserDidEndDocument:(NSXMLParser *)parser{
@@ -66,11 +66,11 @@
 
 // DTD handling methods for various declarations.
 - (void)parser:(NSXMLParser *)parser foundNotationDeclarationWithName:(NSString *)name publicID:(NSString *)publicID systemID:(NSString *)systemID{
-  //  NSLog(@" blob");
+    //  NSLog(@" blob");
 }
 
 - (void)parser:(NSXMLParser *)parser foundUnparsedEntityDeclarationWithName:(NSString *)name publicID:(NSString *)publicID systemID:(NSString *)systemID notationName:(NSString *)notationName{
-   // NSLog(@" blob");
+    // NSLog(@" blob");
 }
 
 - (void)parser:(NSXMLParser *)parser foundAttributeDeclarationWithName:(NSString *)attributeName forElement:(NSString *)elementName type:(NSString *)type defaultValue:(NSString *)defaultValue{
@@ -78,7 +78,7 @@
 }
 
 - (void)parser:(NSXMLParser *)parser foundElementDeclarationWithName:(NSString *)elementName model:(NSString *)model{
-//NSLog(@" blob");
+    //NSLog(@" blob");
 }
 
 - (void)parser:(NSXMLParser *)parser foundInternalEntityDeclarationWithName:(NSString *)name value:(NSString *)value{
@@ -88,15 +88,15 @@
 - (void)parser:(NSXMLParser *)parser foundExternalEntityDeclarationWithName:(NSString *)name publicID:(NSString *)publicID systemID:(NSString *)systemID{}
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
-   // NSLog(@" didStartElement %@ namespaceURI %@ qualifiedName %@ attributes %@",elementName, namespaceURI, qName, attributeDict);
-   
+    // NSLog(@" didStartElement %@ namespaceURI %@ qualifiedName %@ attributes %@",elementName, namespaceURI, qName, attributeDict);
+    
     NSString *tagName=[elementName lowercaseString];
-   // NSLog(@"Start %@", elementName);
+    // NSLog(@"Start %@", elementName);
     
     
     if([tagName isEqualToString:@"placemark"]){
         [self.currentObjectType addObject:@"placemark"];
-         self.currentObject=[[NSMutableDictionary alloc] init];
+        self.currentObject=[[NSMutableDictionary alloc] init];
         NSString *ID=[attributeDict objectForKey:@"id"];
         if(ID!=nil){
             [self.currentObject setObject:ID forKey:@"id"];
@@ -104,9 +104,9 @@
         [self.currentObject setObject:@"marker" forKey:@"mapitemtype"];
     }else if([tagName isEqualToString:@"linestring"]){
         //[self.currentObjectType addObject:@"linestring"];
-       // self.currentObject=[[NSMutableDictionary alloc] init];
-       // NSString *ID=[attributeDict objectForKey:@"id"];
-       // if(ID!=nil){
+        // self.currentObject=[[NSMutableDictionary alloc] init];
+        // NSString *ID=[attributeDict objectForKey:@"id"];
+        // if(ID!=nil){
         //    [self.currentObject setObject:ID forKey:@"id"];
         //}
         [self.currentObject setObject:@"polyline" forKey:@"mapitemtype"];
@@ -190,7 +190,7 @@
 // If namespace processing >isn't< on, the xmlns:radar="http://xml.apple.com/radar" is returned as an attribute pair, the elementName is 'radar:radar' and there is no qualifiedName.
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
-   //  NSLog(@" didEndElement %@ namespaceURI %@ qualifiedName %@",elementName, namespaceURI, qName);
+    //  NSLog(@" didEndElement %@ namespaceURI %@ qualifiedName %@",elementName, namespaceURI, qName);
     
     NSString *tagName=[elementName lowercaseString];
     
@@ -205,22 +205,22 @@
             }else if([[self.currentObject objectForKey:@"mapitemtype"] isEqualToString:@"polygon"]){
                 [self.delegate onKmlPolygon:feature];
             }else{
-             [self.delegate onKmlPlacemark:feature];
+                [self.delegate onKmlPlacemark:feature];
             }
         }
     }else if([tagName isEqualToString:@"style"]){
         [self onKmlStyle:self.currentObject];
-       
+        
     }else if([tagName isEqualToString:@"stylemap"]){
         [self onKmlStyleMap:self.currentObject];
-       
+        
     }else if([tagName isEqualToString:@"groundoverlay"]){
         if(self.delegate!=nil){
             [self.delegate onKmlGroundOverlay:self.currentObject];
         }
     }else{
         NSLog(@"end %@", tagName);
-    
+        
     }
     
     
@@ -232,20 +232,20 @@
 // sent when an end tag is encountered. The various parameters are supplied as above.
 
 - (void)parser:(NSXMLParser *)parser didStartMappingPrefix:(NSString *)prefix toURI:(NSString *)namespaceURI{
-   // NSLog(@" didStartMappingPrefix %@ toURI %@",prefix, namespaceURI);
-
+    // NSLog(@" didStartMappingPrefix %@ toURI %@",prefix, namespaceURI);
+    
 }
 // sent when the parser first sees a namespace attribute.
 // In the case of the cvslog tag, before the didStartElement:, you'd get one of these with prefix == @"" and namespaceURI == @"http://xml.apple.com/cvslog" (i.e. the default namespace)
 // In the case of the radar:radar tag, before the didStartElement: you'd get one of these with prefix == @"radar" and namespaceURI == @"http://xml.apple.com/radar"
 
 - (void)parser:(NSXMLParser *)parser didEndMappingPrefix:(NSString *)prefix{
-   // NSLog(@" didEndMappingPrefix %@",prefix);
+    // NSLog(@" didEndMappingPrefix %@",prefix);
 }
 // sent when the namespace prefix in question goes out of scope.
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
-  //  NSLog(@" foundCharacters %@",string);
+    //  NSLog(@" foundCharacters %@",string);
     
     NSString *data=[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if([data isEqualToString:@"\n"]||[data isEqualToString:@""]){
@@ -254,7 +254,7 @@
     
     
     
-  //  NSLog(@" foundString %@",data);
+    //  NSLog(@" foundString %@",data);
     NSString *current=[self.currentObjectType lastObject];
     
     if(!current){
@@ -277,7 +277,7 @@
         [self.currentObject setObject:[NSString stringWithFormat:@"%@%@",previous,data] forKey:[NSString stringWithString:current]];
     }else if([current isEqualToString:@"color"]){
         NSString *parent=[self.currentObjectType objectAtIndex:([self.currentObjectType count]-2)];
-       // NSLog(@"Style%@",parent);
+        // NSLog(@"Style%@",parent);
         if([parent isEqualToString:@"linestyle"]||[parent isEqualToString:@"polystyle"]){
             if([parent isEqualToString:@"polystyle"]){
                 current=@"polycolor";
@@ -287,7 +287,7 @@
         
     }else{
         if(self.currentObject&&current){
-             [self.currentObject setObject:data forKey:[NSString stringWithString:current]];
+            [self.currentObject setObject:data forKey:[NSString stringWithString:current]];
         }
         if(current){
             NSLog(@"Unknown Value %@ for %@", data, current);
@@ -309,26 +309,26 @@
 // This returns the string of the characters encountered thus far. You may not necessarily get the longest character run. The parser reserves the right to hand these to the delegate as potentially many calls in a row to -parser:foundCharacters:
 
 - (void)parser:(NSXMLParser *)parser foundIgnorableWhitespace:(NSString *)foundIgnorableWhitespace{
-   // NSLog(@" foundIgnorableWhitespace %@",foundIgnorableWhitespace);
+    // NSLog(@" foundIgnorableWhitespace %@",foundIgnorableWhitespace);
 }
 // The parser reports ignorable whitespace in the same way as characters it's found.
 
 - (void)parser:(NSXMLParser *)parser foundProcessingInstructionWithTarget:(NSString *)target data:(NSString *)data{\
-  //  NSLog(@" foundProcessingInstructionWithTarget %@ data %@",target, data);
+    //  NSLog(@" foundProcessingInstructionWithTarget %@ data %@",target, data);
 }
 // The parser reports a processing instruction to you using this method. In the case above, target == @"xml-stylesheet" and data == @"type='text/css' href='cvslog.css'"
 
 - (void)parser:(NSXMLParser *)parser foundComment:(NSString *)comment{
-   // NSLog(@" foundComment %@",comment);
+    // NSLog(@" foundComment %@",comment);
 }
 
 // this reports a CDATA block to the delegate as an NSData.
 
 
-    
+
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError{
     NSLog(@" parseErrorOccurred %@",parseError);
-
+    
 }
 // ...and this reports a fatal error to the delegate. The parser will stop parsing.
 
@@ -339,10 +339,10 @@
 
 
 -(void)onKmlStyleMap:(NSDictionary *)dictionary{
-
-   
+    
+    
     [self.styleMaps setValue:dictionary forKey:[dictionary objectForKey:@"id"]];
-
+    
 }
 -(void)onKmlStyle:(NSDictionary *)dictionary{
     
@@ -356,70 +356,77 @@
 
 
 -(NSDictionary *)prepareData:(NSDictionary *) dictionary{
-
+    
     NSMutableDictionary *feature=[[NSMutableDictionary alloc] initWithDictionary:dictionary];
     
     NSString *styleUrl=[dictionary objectForKey:@"styleurl"];
     
-    if(styleUrl!=nil&&[[styleUrl substringToIndex:1] isEqualToString:@"#"]){
-    
-        NSDictionary *style=[self.styles objectForKey:styleUrl];
-        if(style!=nil){
-          
-            if([[dictionary objectForKey:@"mapitemtype"] isEqualToString:@"marker"]){
-                [feature setValue:[style objectForKey:@"href"] forKey:@"href"];
-                [feature removeObjectForKey:@"styleurl"];
-            }
+    if(styleUrl!=nil){
+        
+        if([[styleUrl substringToIndex:1] isEqualToString:@"#"]){
             
-            if([[dictionary objectForKey:@"mapitemtype"] isEqualToString:@"polyline"]){
-                [feature setValue:[style objectForKey:@"width"]  forKey:@"width"];
-                [feature setValue:[style objectForKey:@"color"]  forKey:@"color"];
-                [feature removeObjectForKey:@"styleurl"];
-            }
-            
-            if([[dictionary objectForKey:@"mapitemtype"] isEqualToString:@"polygon"]){
-                [feature setValue:[style objectForKey:@"width"]  forKey:@"width"];
-                [feature setValue:[style objectForKey:@"color"]  forKey:@"color"];
-                [feature removeObjectForKey:@"styleurl"];
-            }
-            
-            
-        }else{
-            NSDictionary *stylemap=[self.styleMaps objectForKey:styleUrl];
-            if(stylemap!=nil){
-                
-                
-                
-                stylemap=[self prepareData:stylemap];
+            NSDictionary *style=[self.styles objectForKey:styleUrl];
+            if(style!=nil){
                 
                 if([[dictionary objectForKey:@"mapitemtype"] isEqualToString:@"marker"]){
-                    [feature setValue:[[stylemap objectForKey:@"normal"] objectForKey:@"href"] forKey:@"href"];
+                    [feature setValue:[style objectForKey:@"href"] forKey:@"href"];
                     [feature removeObjectForKey:@"styleurl"];
                 }
                 
                 if([[dictionary objectForKey:@"mapitemtype"] isEqualToString:@"polyline"]){
-                    [feature setValue:[[stylemap objectForKey:@"normal"] objectForKey:@"width"]  forKey:@"width"];
-                    [feature setValue:[[stylemap objectForKey:@"normal"] objectForKey:@"color"]  forKey:@"color"];
+                    [feature setValue:[style objectForKey:@"width"]  forKey:@"width"];
+                    [feature setValue:[style objectForKey:@"color"]  forKey:@"color"];
                     [feature removeObjectForKey:@"styleurl"];
                 }
                 
                 if([[dictionary objectForKey:@"mapitemtype"] isEqualToString:@"polygon"]){
-                    [feature setValue:[[stylemap objectForKey:@"normal"] objectForKey:@"width"]  forKey:@"width"];
-                    [feature setValue:[[stylemap objectForKey:@"normal"] objectForKey:@"color"]  forKey:@"color"];
+                    [feature setValue:[style objectForKey:@"width"]  forKey:@"width"];
+                    [feature setValue:[style objectForKey:@"color"]  forKey:@"color"];
                     [feature removeObjectForKey:@"styleurl"];
                 }
                 
-               
                 
-               
             }else{
+                NSDictionary *stylemap=[self.styleMaps objectForKey:styleUrl];
+                if(stylemap!=nil){
+                    
+                    
+                    
+                    stylemap=[self prepareData:stylemap];
+                    
+                    if([[dictionary objectForKey:@"mapitemtype"] isEqualToString:@"marker"]){
+                        [feature setValue:[[stylemap objectForKey:@"normal"] objectForKey:@"href"] forKey:@"href"];
+                        [feature removeObjectForKey:@"styleurl"];
+                    }
+                    
+                    if([[dictionary objectForKey:@"mapitemtype"] isEqualToString:@"polyline"]){
+                        [feature setValue:[[stylemap objectForKey:@"normal"] objectForKey:@"width"]  forKey:@"width"];
+                        [feature setValue:[[stylemap objectForKey:@"normal"] objectForKey:@"color"]  forKey:@"color"];
+                        [feature removeObjectForKey:@"styleurl"];
+                    }
+                    
+                    if([[dictionary objectForKey:@"mapitemtype"] isEqualToString:@"polygon"]){
+                        [feature setValue:[[stylemap objectForKey:@"normal"] objectForKey:@"width"]  forKey:@"width"];
+                        [feature setValue:[[stylemap objectForKey:@"normal"] objectForKey:@"color"]  forKey:@"color"];
+                        [feature removeObjectForKey:@"styleurl"];
+                    }
+                    
+                    
+                    
+                    
+                }else{
+                    
+                    //error!
+                    
+                }
                 
-                //error!
-            
             }
-        
+            
+        }else if([[styleUrl substringToIndex:4] isEqualToString:@"http"]){
+            [feature setValue:styleUrl forKey:@"href"];
+            [feature removeObjectForKey:@"styleurl"];
         }
-    
+        
     }else if([[dictionary objectForKey:@"mapitemtype"] isEqualToString:@"stylemap"]){
         //resolve stylemap.
         NSString *normal=[dictionary objectForKey:@"normal"];
@@ -429,30 +436,30 @@
         NSDictionary *highlightStyle=[self.styles objectForKey:highlight];
         
         return @{@"normal":normalStyle, @"highlight":highlightStyle};
-    
+        
     }
     
     return [[NSDictionary alloc] initWithDictionary:feature];
-
+    
 }
 
 
 +(NSArray*) ParseCoordinateArrayString:(NSString *)coordinates{
-
+    
     NSArray *coordinateArray=[[coordinates stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     return coordinateArray;
-
+    
 }
 
 
 
 +(CLLocationCoordinate2D)ParseCoordinateString:(NSString *)coordinate{
-
+    
     NSArray *coords=[coordinate componentsSeparatedByString:@","];
-
-return CLLocationCoordinate2DMake([[[coords objectAtIndex:1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] floatValue], [[[coords objectAtIndex:0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] floatValue]);
-
-
+    
+    return CLLocationCoordinate2DMake([[[coords objectAtIndex:1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] floatValue], [[[coords objectAtIndex:0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] floatValue]);
+    
+    
 }
 
 
@@ -461,7 +468,7 @@ return CLLocationCoordinate2DMake([[[coords objectAtIndex:1] stringByTrimmingCha
     if(color==nil){
         return [UIColor blackColor];
     }
-
+    
     NSString *aStr=[color substringWithRange:NSMakeRange(0, 2)];
     NSString *bStr=[color substringWithRange:NSMakeRange(2, 2)];
     NSString *gStr=[color substringWithRange:NSMakeRange(4, 2)];
@@ -473,7 +480,7 @@ return CLLocationCoordinate2DMake([[[coords objectAtIndex:1] stringByTrimmingCha
     long b=strtol([bStr UTF8String], NULL, 16);
     
     return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a/255.0];
- 
+    
 }
 
 
