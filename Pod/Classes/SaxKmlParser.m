@@ -103,14 +103,13 @@
         }
         [self.currentObject setObject:@"marker" forKey:@"mapitemtype"];
     }else if([tagName isEqualToString:@"linestring"]){
-        //[self.currentObjectType addObject:@"linestring"];
-        // self.currentObject=[[NSMutableDictionary alloc] init];
-        // NSString *ID=[attributeDict objectForKey:@"id"];
-        // if(ID!=nil){
-        //    [self.currentObject setObject:ID forKey:@"id"];
-        //}
+
         [self.currentObject setObject:@"polyline" forKey:@"mapitemtype"];
-        //NSLog(@"Polygon");
+   
+    }else if([tagName isEqualToString:@"polygon"]){
+        
+        [self.currentObject setObject:@"polygon" forKey:@"mapitemtype"];
+        
     }else if([tagName isEqualToString:@"style"]){
         [self.currentObjectType addObject:@"style"];
         self.currentObject=[[NSMutableDictionary alloc] init];
@@ -119,7 +118,7 @@
             [self.currentObject setObject:[NSString stringWithFormat:@"%@%@",@"#",ID] forKey:@"id"];
         }
         [self.currentObject setObject:@"style" forKey:@"mapitemtype"];
-        //NSLog(@"Polygon");
+   
     }else if([tagName isEqualToString:@"stylemap"]){
         [self.currentObjectType addObject:@"stylemap"];
         self.currentObject=[[NSMutableDictionary alloc] init];
@@ -128,7 +127,7 @@
             [self.currentObject setObject:[NSString stringWithFormat:@"%@%@",@"#",ID] forKey:@"id"];
         }
         [self.currentObject setObject:@"stylemap" forKey:@"mapitemtype"];
-        //NSLog(@"Polygon");
+
     }else if([tagName isEqualToString:@"name"]){
         [self.currentObjectType addObject:@"name"];
     }else if([tagName isEqualToString:@"description"]){
@@ -219,7 +218,7 @@
             [self.delegate onKmlGroundOverlay:self.currentObject];
         }
     }else{
-        NSLog(@"end %@", tagName);
+        //NSLog(@"end %@", tagName);
         
     }
     
