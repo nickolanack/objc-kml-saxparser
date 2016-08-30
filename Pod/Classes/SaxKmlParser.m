@@ -424,6 +424,10 @@
         }else if([[styleUrl substringToIndex:4] isEqualToString:@"http"]){
             [feature setValue:styleUrl forKey:@"href"];
             [feature removeObjectForKey:@"styleurl"];
+        }else{
+            
+                @throw [[NSException alloc] initWithName:@"Unknown url base path" reason:@"Can not resolve relative url paths" userInfo:nil];
+        
         }
         
     }else if([[dictionary objectForKey:@"mapitemtype"] isEqualToString:@"stylemap"]){
